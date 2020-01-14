@@ -1,0 +1,313 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a routerLink="/products">Products</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<br />
+<hr />
+<br />
+<div class="container-fluid" style="overflow-x:auto;">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product_Id</th>
+        <th>Name</th>
+        <th>Product Details</th>
+        <th>isPackage</th>
+        <th>Sub Products</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>
+          <span class="onDisplay[{{ product._id }}]">{{
+            product.Product_Id
+          }}</span>
+          <span style="display: none;" class="editable[{{ product._id }}]">
+            <input
+              type="text"
+              name="Product_Id"
+              [(ngModel)]="Product_Id"
+              class="form-control"
+              style="width: auto;"
+              placeholder="{{ product.Product_Id }}"
+            />
+          </span>
+        </td>
+        <td>
+          <span class="onDisplay[{{ product._id }}]">{{ product.Name }}</span>
+          <span style="display: none;" class="editable[{{ product._id }}]">
+            <input
+              type="text"
+              name="Name"
+              [(ngModel)]="Name"
+              class="form-control"
+              style="width: auto;"
+              placeholder="{{ product.Name }}"
+            />
+          </span>
+        </td>
+        <td>
+          <span class="onDisplay[{{ product._id }}]">{{
+            product.details
+          }}</span>
+          <span style="display: none;" class="editable[{{ product._id }}]">
+            <input
+              type="text"
+              name="details"
+              [(ngModel)]="details"
+              class="form-control"
+              style="width: auto;"
+              placeholder="{{ product.details }}"
+            />
+          </span>
+        </td>
+        <td>
+          <span class="onDisplay[{{ product._id }}]">{{
+            product.isPackage
+          }}</span>
+          <span style="display: none;" class="editable[{{ product._id }}]">
+            <input
+              type="text"
+              name="isPackage"
+              [(ngModel)]="isPackage"
+              class="form-control"
+              style="width: auto;"
+              placeholder="{{ product.isPackage }}"
+            />
+          </span>
+        </td>
+        <td>
+          <span class="onDisplay[{{ product._id }}]">{{
+            product.subProducts
+          }}</span>
+          <span style="display: none;" class="editable[{{ product._id }}]">
+            <input
+              type="text"
+              name="subProducts"
+              [(ngModel)]="subProducts"
+              class="form-control"
+              style="width: auto;"
+              placeholder="{{ product.subProducts }}"
+            />
+          </span>
+        </td>
+        <td>
+          <span class="onDisplay[{{ product._id }}]">{{
+            product.createdAt
+          }}</span>
+          <span style="display: none;" class="editable[{{ product._id }}]">
+            <input
+              type="text"
+              name="createdAt"
+              [(ngModel)]="createdAt"
+              class="form-control"
+              style="width: auto;"
+              placeholder="{{ product.createdAt }}"
+            />
+          </span>
+        </td>
+        <td>
+          <span class="onDisplay[{{ product._id }}]">{{
+            product.updatedAt
+          }}</span>
+          <span style="display: none;" class="editable[{{ product._id }}]">
+            <input
+              type="text"
+              name="updatedAt"
+              [(ngModel)]="updatedAt"
+              class="form-control"
+              style="width: auto;"
+              placeholder="{{ product.updatedAt }}"
+            />
+          </span>
+        </td>
+        <td>
+          <input
+            type="button"
+            (click)="deleteProduct(product._id)"
+            value="Delete"
+            style="border-radius: 3px;padding:10px;"
+            id="delete[{{ product._id }}]"
+          />
+        </td>
+
+        <td>
+          <button
+            (click)="updateForm(product._id)"
+            style="border-radius: 3px;padding:10px;"
+            id="edit[{{ product._id }}]"
+          >
+            Edit
+          </button>
+        </td>
+        <td *ngIf="product.isPackage">
+          <button
+            style="border-radius: 3px;padding:10px;"
+            (click)="addsubProductForm(product._id, product.Product_Id)"
+          >
+            Add Sub-Product
+          </button>
+        </td>
+
+        <td>
+          <input
+            type="button"
+            (click)="updateProduct(product._id)"
+            value="Save"
+            id="saveUpdate[{{ product._id }}]"
+            style="border-radius: 3px;padding:10px; display: none;"
+          />
+        </td>
+        <td>
+          <button
+            (click)="undoUpdate(product._id)"
+            style="border-radius: 3px;padding:10px;display: none;"
+            id="cancel[{{ product._id }}]"
+          >
+            Cancel
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button onclick="addForm()">Add Product</button>
+</div>
+
+<hr />
+<br />
+
+<div class="container-fluid">
+  <form (submit)="addProduct()" id="addProduct" style="display: none;">
+    <h2>Add Product</h2>
+    <label style="padding: 10px;"><b>Enter Product_Id:</b></label>
+    <input
+      type="text"
+      name="Product_Id"
+      [(ngModel)]="Product_Id"
+      class="form-control"
+      style="width: 40%;"
+    /><br />
+    <label style="padding: 10px;"><b>Enter Name:</b></label>
+    <input
+      type="text"
+      name="Name"
+      [(ngModel)]="Name"
+      class="form-control"
+      style="width: 40%;"
+    /><br />
+    <label style="padding: 10px;"><b>Enter details:</b></label>
+    <textarea
+      name="details"
+      [(ngModel)]="details"
+      class="form-control"
+      rows="5"
+      style="width:40%;"
+    ></textarea
+    ><br />
+    <label style="padding: 10px;"><b>Add a bundle</b></label>
+
+    <input
+      type="checkbox"
+      name="isPackage"
+      [(ngModel)]="isPackage"
+      style="height: 20px;width:20px;"
+    /><br />
+    <div *ngIf="isPackage">
+      <label style="padding: 10px;"><b>Enter number of sub products</b></label>
+      <input
+        type="number"
+        name="noSubProducts"
+        id="noSubProducts"
+        [(ngModel)]="noSubProducts"
+        width="40%;"
+      />
+      <br />
+    </div>
+
+    <br />
+    <button
+      type="submit"
+      value="Add"
+      class="btn btn-default"
+      style="border: 1px solid grey;background-color:lightgray;"
+    >
+      Add
+    </button>
+  </form>
+</div>
+
+<div class="container-fluid" *ngIf="clicked_Id">
+  <div>
+      <div *ngFor="let pid of product.subProducts">
+    <form (submit)="addSubProduct(pid)" id="addSubProduct">
+      <div>
+        <h2>Add Sub Product</h2>
+        <label style="padding: 10px;"><b>Parent Product_Id:</b></label>
+        <label style="padding: 10px;"><b>{{product.Product_Id}}</b></label><br>
+        
+          <label style="padding: 10px;"
+            ><b>{{ pid }}</b></label
+          ><br />
+          <label style="padding: 10px;"><b>Enter Name:</b></label>
+          <input
+            type="text"
+            name="Name"
+            [(ngModel)]="Name"
+            class="form-control"
+            style="width: 40%;"
+          /><br />
+          <label style="padding: 10px;"><b>Enter details:</b></label>
+          <textarea
+            name="details"
+            [(ngModel)]="details"
+            class="form-control"
+            rows="5"
+            style="width:40%;"
+          ></textarea
+          ><br />
+          <label style="padding: 10px;"><b>Add a bundle</b></label>
+          <input
+            type="checkbox"
+            name="isPackage"
+            [(ngModel)]="isPackage"
+            style="height: 20px;width:20px;"
+          /><br />
+          <div *ngIf="isPackage">
+            <label style="padding: 10px;"
+              ><b>Enter number of sub products</b></label
+            >
+            <input
+              type="number"
+              name="noSubProducts"
+              id="noSubProducts"
+              [(ngModel)]="noSubProducts"
+              width="40%;"
+            />
+          </div>
+
+          <br />
+          <button
+            type="submit"
+            value="Add"
+            class="btn btn-default"
+            style="border: 1px solid grey;background-color:lightgray;"
+          >
+            Add
+          </button>
+        
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+<hr />
+<br />
